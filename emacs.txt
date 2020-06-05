@@ -1,4 +1,8 @@
+;Initialization file, or init file 
+;Emacs looks for your init file using the filenames ~/.emacs, ~/.emacs.el, or ~/.emacs.d/init.el; you can choose to use any one of these three names 
+;This file, if it exists, specifies how to initialize Emacs for you.Here  ~/ stands for your home directory.  
 ;pathWindows: C:\Users\memoc\AppData\Roaming\.emacs    Archivo de configuracion, es primer archivo que arranca
+;pathLinux: ~/.emacs or ~/.emacs.d 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
