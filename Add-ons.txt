@@ -1,0 +1,6 @@
+# Mozilla
+- AdBlock for Firefox
+- Mate Translate
+- HoverTranslator
+- LiveReload
+- To Google Tranlate
