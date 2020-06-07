@@ -1,0 +1,12 @@
+
+;Command for spacemacs 
+; SPC = alt+m
+
+;Para set numbers (muestra las lineas de codigo)
+SPC t n  ; Toggle line numbers
+
+;Hacer zoom
+SPC z x 
+
+;Mostrar un arbol
+SPC f t

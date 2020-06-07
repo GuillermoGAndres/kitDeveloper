@@ -4,3 +4,7 @@
 - HoverTranslator
 - LiveReload
 - To Google Tranlate
+#Linux Gnome 
+Dash to dock #Para color el dock(menu aplicaciones) abajo
+Screen word translate
+Cafeine
