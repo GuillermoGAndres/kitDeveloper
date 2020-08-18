@@ -78,8 +78,7 @@ set mouse=a " enable mouse support (might not work well on Mac OS X), para cambi
 "Para usarlo en fedoraKDE fue con las teclas C-e (Control-e)
 Plugin 'mattn/emmet-vim'
 
-"Plugin 'vim-airline/vim-airline'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 
 "Plugin para markdown live
 " No me funciona al parecer por npm install -g livedown
@@ -111,4 +110,46 @@ nnoremap <C-k> :tabnext<CR>
 colorscheme jellybeans
 
 Plugin 'mhartington/oceanic-next'
+"--------------------------------------------------------------------------------
+set title  " Muestra el nombre del archivo en la ventana de la terminal
+"set nowrap  " No dividir la línea si es muy larga
+"set cursorline  " Resalta la línea actual
+"set colorcolumn=120  " Muestra la columna límite a 120 caracteres
+set ignorecase  " Ignorar mayúsculas al hacer una búsqueda
+"set spelllang=en,es  " Corregir palabras usando diccionarios en inglés y español
+set termguicolors  " Activa true colors en la terminal
+set background=dark  " Fondo del tema: light o dark
+colorscheme nightfly
+
+"---------------------------Plugins-----------------------------------------------------  
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'preservim/nerdtree'
+Plugin 'ap/vim-css-color'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'vim-airline/vim-airline'
+
+"Manage VimPlug
+"Instalarlo antes de usar, @see:  https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Initialize plugin system
+call plug#end()
+
+"-----------------------------Mappings--------------------------------------------------- 
+map <C-l> :NERDTreeToggle<CR>
+"Entrar NORMAL mode
+imap <C-s> <ESC>
+"Salir sin guardad
+nmap <C-x> :q<CR>
+"Salir foruce brute
+nmap <C-c> :q!<CR>
+"Guardar
+nnoremap <C-s> :w<CR>
+" Moverse al buffer siguiente con <líder> + l
+nnoremap <leader>l :bnext<CR>
+" Moverse al buffer anterior con <líder> + j
+nnoremap <leader>j :bprevious<CR>
+" Cerrar el buffer actual con <líder> + q
+nnoremap <leader>q :bdelete<CR>
+
 
