@@ -127,14 +127,51 @@ Plugin 'preservim/nerdtree'
 Plugin 'ap/vim-css-color'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-airline/vim-airline'
+"Live view html,css, javascript (only linux) @see:  https://github.com/turbio/bracey.vim
+":Bracey #Encender servidor, :BraceyStop  #Apagar
+Plugin 'turbio/bracey.vim'
 
 "Manage VimPlug
 "Instalarlo antes de usar, @see:  https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Initialize plugin system
+"Coc servers
+"coc-clangd  # C y C++ language
+"coc-java #Instalar jdt version 57 para el error que podria causar el servidor
+"coc-html #Te recomienda etiquetas y descripcion una vez que hacer tag apertura <label...
+"Initialize plugin system
 call plug#end()
 
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+"Para puedas visualizar las opciones en cualquier lugar de la palabra
+"Control-space
+" use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+" use <c-space>for trigger completion
+inoremap <silent><expr> <NUL> coc#refresh()
+
+"Navegar opciones  hacia adelante y hacia atras con Tab y Shift Tab.
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"Use <cr> to confirm completion
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+"Que la primera ocurrecia de pop-up() sea selacionada automaticamente al
+"presionar enter
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+"Close the preview window when completion is done.
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 "-----------------------------Mappings--------------------------------------------------- 
 map <C-l> :NERDTreeToggle<CR>
 "Entrar NORMAL mode
@@ -151,5 +188,4 @@ nnoremap <leader>l :bnext<CR>
 nnoremap <leader>j :bprevious<CR>
 " Cerrar el buffer actual con <líder> + q
 nnoremap <leader>q :bdelete<CR>
-
 
