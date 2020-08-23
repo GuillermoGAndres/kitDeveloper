@@ -14,16 +14,16 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+"Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
@@ -45,7 +45,7 @@ filetype plugin indent on    " required
 "------------------------ --------------------------------------------------
 
 "--------------------My configuration -------------------------------
-set number
+"set number
 
 syntax on "Para habilitar el color, por defecto no tiene ningun color para language
 
@@ -71,7 +71,7 @@ set smartindent " even better autoindent (e.g. add indent after '{')
 
 set shiftwidth=4 " number of spaces to use for each step of (auto)indent
 
-set mouse=a " enable mouse support (might not work well on Mac OS X), para cambiarme de ventanas
+"set mouse=a " enable mouse support (might not work well on Mac OS X), para cambiarme de ventanas
 
 "--------------------- Plugins Vudle--------------------------------------------------
 "Instruction : Colacate the plugin an installler, later type PluginInstall
@@ -119,14 +119,21 @@ set ignorecase  " Ignorar mayúsculas al hacer una búsqueda
 "set spelllang=en,es  " Corregir palabras usando diccionarios en inglés y español
 set termguicolors  " Activa true colors en la terminal
 set background=dark  " Fondo del tema: light o dark
+"You can toggle relative numbering on and off using:
+":set rnu    " toggle relative numbering on
+":set rnu!   " toggle relative numbering off
+set number                     " Show current line number
+"set relativenumber             " Show relative line numbers
+set encoding=utf-8
 colorscheme nightfly
 
 "---------------------------Plugins-----------------------------------------------------  
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'preservim/nerdtree'
-Plugin 'ap/vim-css-color'
+"Plugin 'ap/vim-css-color'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-airline/vim-airline'
+Plugin 'tpope/vim-commentary'
 "Live view html,css, javascript (only linux) @see:  https://github.com/turbio/bracey.vim
 ":Bracey #Encender servidor, :BraceyStop  #Apagar
 Plugin 'turbio/bracey.vim'
@@ -136,10 +143,17 @@ Plugin 'turbio/bracey.vim'
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Coc servers
+
 "coc-clangd  # C y C++ language
-"coc-java #Instalar jdt version 57 para el error que podria causar el servidor
+
+"coc-java #Instalar jdt version 57 para el error que podria causar el
+"servidor, ver issues de la su pagina de github
+
 "coc-html #Te recomienda etiquetas y descripcion una vez que hacer tag apertura <label...
 "Initialize plugin system
+"coc-css autocompletado y ya no se necesita preview-color,viene integrado
+"
+"
 call plug#end()
 
 " use <tab> for trigger completion and navigate to the next complete item
@@ -178,8 +192,9 @@ map <C-l> :NERDTreeToggle<CR>
 imap <C-s> <ESC>
 "Salir sin guardad
 nmap <C-x> :q<CR>
+"nmap <C-x><C-c> :q!<CR>
 "Salir foruce brute
-nmap <C-c> :q!<CR>
+"nmap <C-c> :q!<CR>
 "Guardar
 nnoremap <C-s> :w<CR>
 " Moverse al buffer siguiente con <líder> + l
@@ -188,4 +203,15 @@ nnoremap <leader>l :bnext<CR>
 nnoremap <leader>j :bprevious<CR>
 " Cerrar el buffer actual con <líder> + q
 nnoremap <leader>q :bdelete<CR>
+
+"-----------------------Shortcut para compilar/ejecutar--------------------------------------- 
+" % filename with extension
+" %< sin extension
+"Compilar en java, teclas F9 y F10
+map <F9> :w <CR> :!clear <CR> :!javac % <CR>
+"Ejecutar
+map <F10> :!clear <CR> :!java %< <CR>
+
+"--------------------------------------------------------------------------------
+
 
