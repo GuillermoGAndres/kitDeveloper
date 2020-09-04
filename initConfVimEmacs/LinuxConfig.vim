@@ -139,6 +139,10 @@ set smartindent " even better autoindent (e.g. add indent after '{')
 
 set shiftwidth=4 " number of spaces to use for each step of (auto)indent
 
+set shiftround
+
+set hidden  " Permitir cambiar de buffers sin tener que guardarlos
+
 set mouse=a " enable mouse support (might not work well on Mac OS X), para cambiarme de ventanas
 
 set title  " Muestra el nombre del archivo en la ventana de la terminal
@@ -151,6 +155,8 @@ set title  " Muestra el nombre del archivo en la ventana de la terminal
 
 set ignorecase  " Ignorar mayúsculas al hacer una búsqueda
 
+set smartcase  " No ignorar mayúsculas si la palabra a buscar contiene mayúsculas
+
 "set spelllang=en,es  " Corregir palabras usando diccionarios en inglés y español
 
 set background=dark  " Fondo del tema: light o dark
@@ -158,18 +164,36 @@ set background=dark  " Fondo del tema: light o dark
 set termguicolors "Activa true colors en la terminal,Genera una paleta de colores diferente, haciendo como un resaltado
 
 "-----------------------------Mappings--------------------------------------------------- 
-let g:mapleader = ' '  " Definir espacio como la tecla líder
-"map <C-l> :NERDTreeToggle<CR>
-map <C-b> :NERDTreeToggle<CR>
+map <C-l> :NERDTreeToggle<CR>
+"map <C-b> :NERDTreeToggle<CR>
 "Entrar NORMAL mode
 imap <C-s> <ESC>
 "Guardar
-nnoremap <C-s> :w<CR>
+nnoremap <C-s> :w<CR> 
 "Salir sin guardad
 nmap <C-x> :q<CR>
 "nmap <C-x><C-c> :q!<CR>
 "Salir foruce brute
 "nmap <C-c> :q!<CR>
+
+let g:mapleader = ' '  " Definir espacio como la tecla líder
+"Guardar con <líder> + s
+"nnoremap <leader>s :w<CR> 
+nnoremap <leader>x :q!<CR>
+
+" " Usar <líder> + y para copiar al portapapeles
+" vnoremap <leader>y "+y
+" nnoremap <leader>y "+y
+
+" " Usar <líder> + d para cortar al portapapeles
+" vnoremap <leader>d "+d
+" nnoremap <leader>d "+d
+
+" " Usar <líder> + p para pegar desde el portapapeles
+" nnoremap <leader>p "+p
+" vnoremap <leader>p "+p
+" nnoremap <leader>P "+P
+" vnoremap <leader>P "+P
 
 " Moverse entre buffers
 nnoremap <C-Left> :bprevious<CR>
@@ -189,7 +213,7 @@ nnoremap <C-Right> :bnext<CR>
 "nnoremap <leader>j :bprevious<CR>
 " Cerrar el buffer actual con <líder> + q
 "nnoremap <leader>q :bdelete<CR>
-noremap <Leader>y "*y 
+"noremap <Leader>y "*y 
 
 "-----------------------Shortcut para compilar/ejecutar--------------------------------------- 
 " % filename with extension
