@@ -1,96 +1,3 @@
-"--------------------My configuration -------------------------------------------------
-"You can toggle relative numbering on and off using:
-":set rnu    " toggle relative numbering on
-":set rnu!   " toggle relative numbering off
-
-"set number relativenumber
-set number                     " Show current line number
-
-"set relativenumber             " Show relative line numbers
-
-set encoding=utf-8 " Codifica los caractares para ser mostrados como los acentos o ñ
-
-syntax on "Para habilitar el color, por defecto no tiene ningun color para language
-
-set tabstop=4 "Para los tabuladores size
-
-set expandtab "Replacing Tabs with White Spaces
-
-set softtabstop=4 "Removing Multiple Spaces on Single Backspace
-
-"So, 4 white spaces for each tab will be removed all together with a single press of the <Backspace> key.
-
-"Estos tres van acompados para que funcione perfecto, shiftwidtj ajusta el
-
-"identato de autoindent, en este caso cuatro
-
-set autoindent "Enabling Automatic Indentation,indenta dependiendo del anterior
-
-set smartindent " even better autoindent (e.g. add indent after '{')
-
-set shiftwidth=4 " number of spaces to use for each step of (auto)indent
-
-set mouse=a " enable mouse support (might not work well on Mac OS X), para cambiarme de ventanas
-
-set title  " Muestra el nombre del archivo en la ventana de la terminal
-
-"set nowrap  " No dividir la línea si es muy larga
-
-"set cursorline  " Resalta la línea actual
-
-"set colorcolumn=120  " Muestra la columna límite a 120 caracteres
-
-set ignorecase  " Ignorar mayúsculas al hacer una búsqueda
-
-"set spelllang=en,es  " Corregir palabras usando diccionarios en inglés y español
-
-set background=dark  " Fondo del tema: light o dark
-
-set termguicolors "Activa true colors en la terminal,Genera una paleta de colores diferente, haciendo como un resaltado
-
-"--------------------------------------------------------------------------------
-"-----------------------------Mappings--------------------------------------------------- 
-let g:mapleader = ' '  " Definir espacio como la tecla líder
-map <C-l> :NERDTreeToggle<CR>
-"Entrar NORMAL mode
-imap <C-s> <ESC>
-"Guardar
-nnoremap <C-s> :w<CR>
-"Salir sin guardad
-nmap <C-x> :q<CR>
-"nmap <C-x><C-c> :q!<CR>
-"Salir foruce brute
-"nmap <C-c> :q!<CR>
-
-" Moverse entre buffers
-nnoremap <C-Left> :bprevious<CR>
-nnoremap <C-Right> :bnext<CR>
-
-"Configurando el movimiento de los tab para sea mas facil en vez de utilar gt 
-"nnoremap <C-Left> :tabprevious<CR>                                                                            
-"nnoremap <C-Right> :tabnext<CR>
-"nnoremap <C-j> :tabprevious<CR>                                                                            
-"nnoremap <C-k> :tabnext<CR>
-
-"Definir la letra leader
-
-" Moverse al buffer siguiente con <líder> + l
-"nnoremap <leader>l :bnext<CR>
-" Moverse al buffer anterior con <líder> + j
-"nnoremap <leader>j :bprevious<CR>
-" Cerrar el buffer actual con <líder> + q
-"nnoremap <leader>q :bdelete<CR>
-noremap <Leader>y "*y 
-
-"-----------------------Shortcut para compilar/ejecutar--------------------------------------- 
-" % filename with extension
-" %< sin extension
-"Compilar en java, teclas F9 y F10
-"map <F9> :w <CR> :!clear <CR> :!javac % <CR>
-"Ejecutar
-"map <F10> :!clear <CR> :!java %< <CR>
-
-
 "---------------Vudle-----------------------------------------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -169,7 +76,7 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-"------------------------ ---------------------------------------------------------------
+
 "-------------Manage-VimPlug--------------------------------------------------------------
 
 "Manage VimPlug
@@ -199,6 +106,100 @@ Plug 'pangloss/vim-javascript'
 "Java support
 Plug 'uiiaoo/java-syntax.vim' 
 call plug#end()
+
+"--------------------My configuration -------------------------------------------------
+"You can toggle relative numbering on and off using:
+":set rnu    " toggle relative numbering on
+":set rnu!   " toggle relative numbering off
+
+"set number relativenumber
+set number                     " Show current line number
+
+"set relativenumber             " Show relative line numbers
+
+set encoding=utf-8 " Codifica los caractares para ser mostrados como los acentos o ñ
+
+syntax on "Para habilitar el color, por defecto no tiene ningun color para language
+
+set tabstop=4 "Para los tabuladores size
+
+set expandtab "Replacing Tabs with White Spaces
+
+set softtabstop=4 "Removing Multiple Spaces on Single Backspace
+
+"So, 4 white spaces for each tab will be removed all together with a single press of the <Backspace> key.
+
+"Estos tres van acompados para que funcione perfecto, shiftwidtj ajusta el
+
+"identato de autoindent, en este caso cuatro
+
+set autoindent "Enabling Automatic Indentation,indenta dependiendo del anterior
+
+set smartindent " even better autoindent (e.g. add indent after '{')
+
+set shiftwidth=4 " number of spaces to use for each step of (auto)indent
+
+set mouse=a " enable mouse support (might not work well on Mac OS X), para cambiarme de ventanas
+
+set title  " Muestra el nombre del archivo en la ventana de la terminal
+
+"set nowrap  " No dividir la línea si es muy larga
+
+"set cursorline  " Resalta la línea actual
+
+"set colorcolumn=120  " Muestra la columna límite a 120 caracteres
+
+set ignorecase  " Ignorar mayúsculas al hacer una búsqueda
+
+"set spelllang=en,es  " Corregir palabras usando diccionarios en inglés y español
+
+set background=dark  " Fondo del tema: light o dark
+
+set termguicolors "Activa true colors en la terminal,Genera una paleta de colores diferente, haciendo como un resaltado
+
+"-----------------------------Mappings--------------------------------------------------- 
+let g:mapleader = ' '  " Definir espacio como la tecla líder
+"map <C-l> :NERDTreeToggle<CR>
+map <C-b> :NERDTreeToggle<CR>
+"Entrar NORMAL mode
+imap <C-s> <ESC>
+"Guardar
+nnoremap <C-s> :w<CR>
+"Salir sin guardad
+nmap <C-x> :q<CR>
+"nmap <C-x><C-c> :q!<CR>
+"Salir foruce brute
+"nmap <C-c> :q!<CR>
+
+" Moverse entre buffers
+nnoremap <C-Left> :bprevious<CR>
+nnoremap <C-Right> :bnext<CR>
+
+"Configurando el movimiento de los tab para sea mas facil en vez de utilar gt 
+"nnoremap <C-Left> :tabprevious<CR>                                                                            
+"nnoremap <C-Right> :tabnext<CR>
+"nnoremap <C-j> :tabprevious<CR>                                                                            
+"nnoremap <C-k> :tabnext<CR>
+
+"Definir la letra leader
+
+" Moverse al buffer siguiente con <líder> + l
+"nnoremap <leader>l :bnext<CR>
+" Moverse al buffer anterior con <líder> + j
+"nnoremap <leader>j :bprevious<CR>
+" Cerrar el buffer actual con <líder> + q
+"nnoremap <leader>q :bdelete<CR>
+noremap <Leader>y "*y 
+
+"-----------------------Shortcut para compilar/ejecutar--------------------------------------- 
+" % filename with extension
+" %< sin extension
+"Compilar en java, teclas F9 y F10
+"map <F9> :w <CR> :!clear <CR> :!javac % <CR>
+"Ejecutar
+"map <F10> :!clear <CR> :!java %< <CR>
+
+"--------------------------ConfigurationPlugins--------------------------------------
 
 "Configuracion para coc, para los pop-ups 
 " use <tab> for trigger completion and navigate to the next complete item
@@ -232,10 +233,10 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR
 "Close the preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
-"--------------------------------------------------------------------------------
+"----------------------
 "Emmet 
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+autocmd FileType html,php,css EmmetInstall
 let g:user_emmet_leader_key='<C-E>'
 
 colorscheme moonfly
@@ -257,4 +258,4 @@ hi Structure term=bold ctermfg=Cyan guifg=#EBD096 gui=bold
 "utlizaba
 "guibg cambia el color del backgraund a oscuro 
 "guifg cambia el color de los aperturtas de los paretensis y signos
-highlight Normal ctermbg=232 ctermfg=251 guibg=#1E1E1E guifg=#B1ACAC
+highlight Normal ctermbg=232 ctermfg=251 guibg=#1E1E1E guifg=#D4D4D4
