@@ -25,7 +25,7 @@
     ("2f9152fe4b4cdb216a077bdf1b02d8eec788b989c6ddc2641e632b9f4751b22a" default)))
  '(package-selected-packages
    (quote
-    (helm neotree ac-html emmet-mode nlinum-hl nlinum-relative ace-window ac-ispell auto-complete 2048-game chess)))
+    (yasnippet-snippets flycheck impatient-mode web-mode helm neotree ac-html emmet-mode nlinum-hl nlinum-relative ace-window ac-ispell auto-complete 2048-game chess)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -160,3 +160,27 @@
 (global-set-key [f8] 'neotree-toggle)
 ;Installed Melp helm
 (global-set-key (kbd "M-x") 'helm-M-x) ;Enable automatically
+
+; web mode
+;(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+;impatient-mode MELPA
+;Enable the web server provided by simple-httpd:
+;M-x httpd-start
+;Publish buffers by enabling the minor mode impatient-mode.
+;M-x impatient-mode
+;And then point your browser to http://localhost:8080/imp/, select a buffer, and watch your changes appear as you type!
+; http://localhost:8080/imp/
+
+; Flycheck MELPA
+; Para habilitarlo hazmo manual flycheck-mode
+
+;yasnippe Melpa
+(add-to-list 'load-path
+              "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+;(yas-global-mode 1)
+
+(yas-reload-all)
+(add-hook 'c++-mode-hook #'yas-minor-mode)
+;eg: (add-hook 'c++-mode-hook 'my-c++-mode-hook)
