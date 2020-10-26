@@ -25,7 +25,7 @@
     ("2f9152fe4b4cdb216a077bdf1b02d8eec788b989c6ddc2641e632b9f4751b22a" default)))
  '(package-selected-packages
    (quote
-    (nlinum-hl nlinum-relative ace-window ac-ispell auto-complete 2048-game chess)))
+    (helm neotree ac-html emmet-mode nlinum-hl nlinum-relative ace-window ac-ispell auto-complete 2048-game chess)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -125,3 +125,38 @@
 (add-hook 'prog-mode-hook 'linum-mode)
 ;@see: https://www.emacswiki.org/emacs/ShowParenMode
 (show-paren-mode 1)
+
+;------auto-complete tags popups of html in  html y web mode-------
+(defun setup-ac-for-html ()
+  ;; Require ac-haml since we are setup haml auto completion
+  (require 'ac-html)
+  ;; Require default data provider if you want to use
+  (require 'ac-html-default-data-provider)
+  ;; Enable data providers,
+  ;; currently only default data provider available
+  (ac-html-enable-data-provider 'ac-html-default-data-provider)
+  ;; Let ac-haml do some setup
+  (ac-html-setup)
+  ;; Set your ac-source
+  (setq ac-sources '(ac-source-html-tag
+                     ac-source-html-attr
+                     ac-source-html-attrv))
+  ;; Enable auto complete mode
+  (auto-complete-mode))
+
+
+(add-hook 'html-mode-hook 'setup-ac-for-html)
+
+;Better answer
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(electric-pair-mode) ; enable autopair in all buffers
+
+;Enable emmet automatly sgml(Lenguajes de etiqueta)
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+
+;Instaled MELPA neotree
+(global-set-key [f8] 'neotree-toggle)
+;Installed Melp helm
+(global-set-key (kbd "M-x") 'helm-M-x) ;Enable automatically
