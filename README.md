@@ -21,6 +21,7 @@ C-x C-q - Rename files or directories.
 d- Selection delete.
 u - Deselection.
 x - Confirmation delete.
+v - view document (q exit)
 g - Refresh.
 C-x -/+ - Zoom font(local).
 
@@ -53,6 +54,12 @@ C-c C-v : Open file browser (html recommend)
 
 
 C-<shift>-% : Replace word.
+C-x 2 : Split horizontal.
+C-x 3 : Split vertical
+
+C-x t 2 : Open tab
+C-tab - Switch tab
+C-x - left/right : Change next or back buffer.
 
 ~~~
 
