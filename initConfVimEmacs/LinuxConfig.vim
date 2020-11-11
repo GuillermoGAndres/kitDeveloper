@@ -105,6 +105,15 @@ Plug 'bluz71/vim-nightfly-guicolors'
 Plug 'pangloss/vim-javascript'    
 "Java support
 Plug 'uiiaoo/java-syntax.vim' 
+Plug 'franbach/miramare'
+
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'vim-python/python-syntax'
+"Plug 'chriskempson/base16-vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'artanikin/vim-synthwave84'
+Plug 'joshdick/onedark.vim'
+
 call plug#end()
 
 "--------------------My configuration -------------------------------------------------
@@ -147,11 +156,11 @@ set mouse=a " enable mouse support (might not work well on Mac OS X), para cambi
 
 set title  " Muestra el nombre del archivo en la ventana de la terminal
 
-"set nowrap  " No dividir la línea si es muy larga
+set nowrap  " No dividir la línea si es muy larga
 
 "set cursorline  " Resalta la línea actual
 
-"set colorcolumn=120  " Muestra la columna límite a 120 caracteres
+" set colorcolumn=80  " Muestra la columna límite a 80 caracteres
 
 set ignorecase  " Ignorar mayúsculas al hacer una búsqueda
 
@@ -168,10 +177,13 @@ map <C-l> :NERDTreeToggle<CR>
 "map <C-b> :NERDTreeToggle<CR>
 "Entrar NORMAL mode
 imap <C-s> <ESC>
+"imap <C-x> <ESC>
 "Guardar
 nnoremap <C-s> :w<CR> 
+"nnoremap <C-x> :w<CR>
 "Salir sin guardad
-nmap <C-x> :q<CR>
+"nmap <C-x> :q<CR>
+nmap <C-c> :q<CR>
 "nmap <C-x><C-c> :q!<CR>
 "Salir foruce brute
 "nmap <C-c> :q!<CR>
@@ -179,7 +191,8 @@ nmap <C-x> :q<CR>
 let g:mapleader = ' '  " Definir espacio como la tecla líder
 "Guardar con <líder> + s
 "nnoremap <leader>s :w<CR> 
-nnoremap <leader>x :q!<CR>
+"nnoremap <leader>x :q!<CR>
+nnoremap <leader>c :q!<CR>
 
 " " Usar <líder> + y para copiar al portapapeles
 " vnoremap <leader>y "+y
@@ -264,8 +277,10 @@ autocmd FileType html,php,css EmmetInstall
 let g:user_emmet_leader_key='<C-E>'
 
 colorscheme moonfly
+let g:python_highlight_all = 1
 "Con la extension java-syntax y el teme moonfly
-hi Structure term=bold ctermfg=Cyan guifg=#EBD096 gui=bold 
+"hi Structure term=bold ctermfg=Cyan guifg=#EBD096 gui=bold 
+
 "Para modificar las classes de java a color amarillo
 "http://vimdoc.sourceforge.net/htmldoc/syntax.html#:highlight
 "https://stackoverflow.com/questions/1890103/change-syntax-color-in-vim
@@ -282,4 +297,8 @@ hi Structure term=bold ctermfg=Cyan guifg=#EBD096 gui=bold
 "utlizaba
 "guibg cambia el color del backgraund a oscuro 
 "guifg cambia el color de los aperturtas de los paretensis y signos
-highlight Normal ctermbg=232 ctermfg=251 guibg=#1E1E1E guifg=#D4D4D4
+
+"highlight Normal ctermbg=232 ctermfg=251 guibg=#1E1E1E guifg=#D4D4D4
+"---------------------------------
+"colorscheme synthwave84
+colorscheme onedark
