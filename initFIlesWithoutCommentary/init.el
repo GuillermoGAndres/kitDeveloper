@@ -1,4 +1,4 @@
-;------------------------------Melpa------------------------------------------------------------ 
+;;;;------------------------------Melpa------------------------------------------------------------ 
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -23,7 +23,7 @@
 ;; (setq company-tooltip-limit 20)                      ; bigger popup window
 ;; (setq company-tooltip-align-annotations 't)          ; align annotations to the right tooltip border
 ;; (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-;; (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 ;; (global-set-key (kbd "C-c /") 'company-files)        ; Force complete file names on "C-c /" key
 
 
@@ -46,6 +46,12 @@
 ;emacsclient file.java // By example
 (server-start)
 
+;Wrap lines o no 
+;M-x toggle-truncate-lines
+
+;if your lines wrap hard at the right-hand edge of the window,
+;M-x visual-line-mode
+
 ;-------------------------------------
 ;Aumentar tamaño de letra
 (set-face-attribute 'default nil :height 130)
@@ -64,11 +70,6 @@
 (require 'neotree)
 (global-set-key [f12] 'neotree-toggle)
 
-;(require 'kaolin-themes)
-;(load-theme 'kaolin-dark t)
-
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/rebecca-theme")
-;(load-theme #'rebecca t)
 
 ;Ocultar tool bar 
 (tool-bar-mode -1)
@@ -78,30 +79,6 @@
 (if window-system
     (menu-bar-mode 1)
 )
-
-;------auto-complete tags popups of html in  html y web mode-------
-;; (defun setup-ac-for-html ()
-;;   ;; Require ac-haml since we are setup haml auto completion
-;;   (require 'ac-html)
-;;   ;; Require default data provider if you want to use
-;;   (require 'ac-html-default-data-provider)
-;;   ;; Enable data providers,
-;;   ;; currently only default data provider available
-;;   (ac-html-enable-data-provider 'ac-html-default-data-provider)
-;;   ;; Let ac-haml do some setup
-;;   (ac-html-setup)
-;;   ;; Set your ac-source
-;;   (setq ac-sources '(ac-source-html-tag
-;;                      ac-source-html-attr
-;;                      ac-source-html-attrv))
-;;   ;; Enable auto complete mode
-;;   (auto-complete-mode))
-
-;; (add-hook 'html-mode-hook 'setup-ac-for-html)
-
-
-;-------------------------------------
-
 
 ;Don't show intro
 ;(setq inhibit-startup-message t)
@@ -127,36 +104,22 @@
 ;(load-theme 'challenger-deep t)
 
 ;permanently enable syntax checking with Flycheck
-;(add-hook 'after-init-hook #'global-flycheck-mode) 
+(add-hook 'after-init-hook #'global-flycheck-mode) 
 
 ;yasnippet
-
 (add-to-list 'load-path
               "~/.emacs.d/plugins/yasnippet")
 (require 'yasnippet)
 (yas-global-mode 1)
+
 
 ;Enable emmet automatly sgml(Lenguajes de etiqueta)
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 (add-hook 'web-mode  'emmet-mode) ;; enable Emmet's web mode abbreviation.
 
-
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/modus-themes")
-;(load-theme 'modus-vivendi t) 
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/arc-dark-theme")
-;(load-theme 'arc-dark t) 
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-spacegray-theme")
-;(load-theme 'spacegray t)
-
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/city-lights-theme")
-;(load-theme 'doom-city-lights-theme t)
-
-
 ;Instaldo desde MELPA doom-emacs
 (load-theme 'doom-city-lights t)
-
-
 
 ;(set-face-foreground 'linum "#E8D92D")
 ;#ffcc00 amarillo
@@ -241,43 +204,6 @@
 (define-key web-mode-map (kbd "M-RET") 'company-complete)
 
 
-
-
-;; (add-hook 'web-mode-hook (lambda ()
-;;                           (set (make-local-variable 'company-backends) '(company-web-html))
-;;                           (company-mode t)))
-
-;--------------csswatcher (No supe que hac)
-;(require 'ac-html-csswatcher)
-;(company-web-csswatcher-setup)
-
-; C (Ya no necesito este plugin, con company-mode lo hace ya porque tiene integrado clang)
-;; (require 'ac-c-headers)
-;; (add-hook 'c-mode-hook
-;;           (lambda ()
-;;             (add-to-list 'ac-sources 'ac-source-c-headers)
-;;             (add-to-list 'ac-sources 'ac-source-c-header-symbols t)))
-
-;SHELL Python
-;(add-hook 'inferior-python-mode-hook 'ac-capf-setup)
-
-;Highlight
-
-;; (add-hook 'prog-mode-hook '(lambda () 
-;;         (highlight-regexp "%[[:alpha:]]\\|\\\\[[:alpha:]]")))
-
-
-;All-the-icons (Falle en instalar iconos)
-;(add-to-list 'load-path "~/.emacs.d/plugins/all-the-icons")
-;(require 'all-the-icons)
-;(use-package all-the-icons)
-;(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-;Melpa dired-icon 
-;(add-hook 'dired-mode-hook 'dired-icon-mode)
-
-;highlight numbers
-
 (add-hook 'prog-mode-hook 'highlight-numbers-mode)
 ;(hes-mode)
 
@@ -325,9 +251,9 @@
 ;jump function M.
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 ;Refresf buffer
-;(global-set-key [f5] 'revert-buffer)
+(global-set-key [f5] 'revert-buffer)
 ;Evoid confirmation
-(global-set-key [f5] (lambda () (interactive) (revert-buffer nil t)))
+;(global-set-key [f5] (lambda () (interactive) (revert-buffer nil t)))
 
 ;Define word (Search a dictionary wordnik)
 (global-set-key (kbd "C-c d") 'define-word-at-point)
@@ -385,6 +311,22 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+
+
+; Helm
+
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;(helm-mode 1)
+
+(global-set-key [f11] 'helm-semantic-or-imenu)
+
+(global-set-key (kbd "C-x g") 'goto-line)
+
+;(require 'lsp-java)
+;(add-hook 'java-mode-hook #'lsp)
+
 ;--------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -393,16 +335,15 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["black" "#E2434C" "#86B187" "#E0D063" "#84C452" "#E18CBB" "#8AC6F2" "white"])
- '()
- '(custom-safe-themes
-   '("5b809c3eae60da2af8a8cfba4e9e04b4d608cb49584cb5998f6e4a1c87c057c4" "e074be1c799b509f52870ee596a5977b519f6d269455b84ed998666cf6fc802a" "5d09b4ad5649fea40249dd937eaaa8f8a229db1cec9a1a0ef0de3ccf63523014" "6b80b5b0762a814c62ce858e9d72745a05dd5fc66f821a1c5023b4f2a76bc910" "37a4701758378c93159ad6c7aceb19fd6fb523e044efe47f2116bc7398ce20c9" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "7d708f0168f54b90fc91692811263c995bebb9f68b8b7525d0e2200da9bc903c" "2cdc13ef8c76a22daa0f46370011f54e79bae00d5736340a5ddfe656a767fddf" "3c2f28c6ba2ad7373ea4c43f28fcf2eed14818ec9f0659b1c97d4e89c99e091e" "f2927d7d87e8207fa9a0a003c0f222d45c948845de162c885bf6ad2a255babfd" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "e1ef2d5b8091f4953fe17b4ca3dd143d476c106e221d92ded38614266cea3c8b" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" "d5a878172795c45441efcd84b20a14f553e7e96366a163f742b95d65a3f55d71" "71e5acf6053215f553036482f3340a5445aee364fb2e292c70d9175fb0cc8af7" "2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "37144b437478e4c235824f0e94afa740ee2c7d16952e69ac3c5ed4352209eefb" "bf387180109d222aee6bb089db48ed38403a1e330c9ec69fe1f52460a8936b66" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "b5fff23b86b3fd2dd2cc86aa3b27ee91513adaefeaa75adc8af35a45ffb6c499" "9efb2d10bfb38fe7cd4586afb3e644d082cbcdb7435f3d1e8dd9413cbe5e61fc" "a3b6a3708c6692674196266aad1cb19188a6da7b4f961e1369a68f06577afa16" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "8d7684de9abb5a770fbfd72a14506d6b4add9a7d30942c6285f020d41d76e0fa" "d7491c599885571b264596b825f9d37af4eba08bf09d9645f955f46059481cdc" "9724b3abaf500b227faa036dcf817abed9764802835ba6e8d1e475c877205157" "1de8de5dddd3c5138e134696180868490c4fc86daf9780895d8fc728449805f3" "c1c459af570241993823db87096bc775506c378aa02c9c6cd9ccaa8247056b96" "bb28b083fe1c61848c10c049be076afc572ea9bee6e1f8dc2631c5ee4f7388c8" "6a0d7f41968908e25b2f56fa7b4d188e3fc9a158c39ef680b349dccffc42d1c8" "c342ef444e7aca36f4b39a8e2848c4ba793d51c58fdb520b8ed887766ed6d40b" "10845272b6fa47a6cdfc49816748bdb1dc1cb9be647801c25c054a8e6a27ef72" "643b4d181b6afa4306d65db76889d8b987e095ae8f262a4c71dd5669d39c9b09" "7e5d400035eea68343be6830f3de7b8ce5e75f7ac7b8337b5df492d023ee8483" "c499bf4e774b34e784ef5a104347b81c56220416d56d5fd3fd85df8704260aad" "fc0fe24e7f3d48ac9cf1f87b8657c6d7a5dd203d5dabd2f12f549026b4c67446" "8ce796252a78d1a69e008c39d7b84a9545022b64609caac98dc7980d76ae34e3" "17a58e509bbb8318abf3558c4b7b44273b4f1b555c5e91d00d4785b7b59d6d28" "9ef81da35ce99a4c7155db7d46e4f8c20a51860d6879cf082e3ed1c5222c17d3" "e068203104e27ac7eeff924521112bfcd953a655269a8da660ebc150c97d0db8" "9089d25e2a77e6044b4a97a2b9fe0c82351a19fdd3e68a885f40f86bbe3b3900" default))
+ '(custom-safe-themes '("" default))
  '(fci-rule-color "#4C4A4D")
  '(jdee-db-active-breakpoint-face-colors (cons "#19181A" "#FCFCFA"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#19181A" "#A9DC76"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#19181A" "#727072"))
+ '(nil nil t)
  '(objed-cursor-color "#CC6666")
  '(package-selected-packages
-   '(company-c-headers langtool google-translate define-word ivy dumb-jump magit highlight-escape-sequences highlight-numbers ac-html-csswatcher ac-capf markdown-mode ac-c-headers ## company-web company yasnippet-snippets flycheck ac-clang nyan-mode helm ac-html impatient-mode emmet-mode web-mode kaolin-themes auto-complete))
+   '(eglot lsp-mode lsp-java company-c-headers langtool google-translate define-word ivy dumb-jump magit highlight-escape-sequences highlight-numbers ac-html-csswatcher ac-capf markdown-mode ac-c-headers ## company-web company yasnippet-snippets flycheck ac-clang nyan-mode helm ac-html impatient-mode emmet-mode web-mode kaolin-themes auto-complete))
  '(pdf-view-midnight-colors (cons "#FCFCFA" "#2D2A2E"))
  '(pos-tip-background-color "#222225")
  '(pos-tip-foreground-color "#c8c8d0")
