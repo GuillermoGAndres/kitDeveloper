@@ -80,7 +80,7 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 ;Inicializ Emacs server para sea mas rapido abrir archivos desde la terminal
 ;emacsclient file.java // By example
-;(server-start)
+;(server-start) ;Ya no sera necesario con el plugin zsh emacs.
 
 ;Wrap lines o no 
 ;M-x toggle-truncate-lines
@@ -405,6 +405,7 @@
 
 (add-hook 'c-mode-hook 'flycheck-mode)
 (add-hook 'c++-mode-hook 'flycheck-mode)
+(add-hook 'java-mode-hook 'flycheck-mode)
 ; Con esto lo agrega para la lista de recomendacion de company
 (add-to-list 'company-backends 'company-c-headers)
 
@@ -472,7 +473,53 @@
 ;;   :ensure t
 ;;   :hook (after-init . doom-modeline-mode))
 
+;Genera un menu de ayuda con para las prefix command.
+(use-package which-key 
+:ensure t 
+:init
+(which-key-mode)
+)
 
+;Ejecuta programas
+;Lo he probado con un programa de java que contiene el metodo main.
+(use-package quickrun 
+:ensure t
+:bind ("C-c r" . quickrun))
+
+;Automatizar mis plugins para que se instalen solos si no los tengo.
+;; (use-package yasnippet :config (yas-global-mode))
+;; (use-package yasnippet-snippets :ensure t)
+;; (use-package flycheck :ensure t :init (global-flycheck-mode))
+
+
+;@refernce
+;https://github.com/neppramod/java_emacs/blob/master/emacs-configuration.org
+;Solo funciona con la version reciente de java 11, asi tienes que cambiar tu java8 a java 11
+(use-package lsp-mode
+:ensure t
+:hook (
+   (lsp-mode . lsp-enable-which-key-integration)
+   (java-mode . #'lsp-deferred)
+)
+:init (setq 
+    lsp-keymap-prefix "C-c l"              ; this is for which-key integration documentation, need to use lsp-mode-map
+    lsp-enable-file-watchers nil
+    read-process-output-max (* 1024 1024)  ; 1 mb
+    lsp-completion-provider :capf
+    lsp-idle-delay 0.500
+)
+:config 
+    (setq lsp-intelephense-multi-root nil) ; don't scan unnecessary projects
+    (with-eval-after-load 'lsp-intelephense
+    (setf (lsp--client-multi-root (gethash 'iph lsp-clients)) nil))
+	(define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+)
+
+(use-package lsp-java 
+:ensure t
+:config (add-hook 'java-mode-hook 'lsp))
+
+;(setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -480,9 +527,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company-bootstrap doom-modeline multiple-cursors flymd company-box company-quickhelp mode-icons yasnippet-snippets which-key web-mode use-package rainbow-delimiters projectile nyan-mode neotree magit lsp-java langtool kaolin-themes impatient-mode highlight-numbers highlight-escape-sequences helm google-translate flycheck exec-path-from-shell emmet-mode eglot dumb-jump doom-themes define-word dashboard counsel company-web company-c-headers all-the-icons ac-html-csswatcher ac-html ac-clang ac-capf ac-c-headers)))
+   '(quickrun company-bootstrap doom-modeline multiple-cursors flymd company-box company-quickhelp mode-icons yasnippet-snippets which-key web-mode use-package rainbow-delimiters projectile nyan-mode neotree magit lsp-java langtool kaolin-themes impatient-mode highlight-numbers highlight-escape-sequences helm google-translate flycheck exec-path-from-shell emmet-mode eglot dumb-jump doom-themes define-word dashboard counsel company-web company-c-headers all-the-icons ac-html-csswatcher ac-html ac-clang ac-capf ac-c-headers)))
 
  
-
-
 
