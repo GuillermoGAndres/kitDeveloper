@@ -1,9 +1,20 @@
 (setq user-full-name "Guillermo Andres")
 (setq user-mail-address "memocampeon35@gmail.com")
 
-;;;---------------------
-;;;;; install the melpa repository
-;;
+;; Create a variable to indicate where emacs's configuration is installed
+(setq EMACS_DIR "~/.emacs.d/")
+
+;; Avoid garbage collection at statup
+;; (setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
+;;       gc-cons-percentage 0.6)
+
+;; (add-hook 'emacs-startup-hook
+;;   (lambda ()
+;;     (setq gc-cons-threshold 300000000 ; 300mb	
+;;           gc-cons-percentage 0.1)))
+
+;---------------------------Paquetes de Melpa--------------------------------
+; install the melpa repository
 (require 'package)
 (setq package-archives (append package-archives
 			       '(("melpa" . "http://melpa.org/packages/"))))
@@ -31,9 +42,117 @@
   :ensure t
   :config (exec-path-from-shell-initialize))
 
-;---------------------------Paquetes de Melpa-------------------------------------------------- 
-
 ;----------------------------Mi configuracion--------------------------------------------------  
+;; Longer whitespace, otherwise syntax highlighting is limited to default column
+(setq whitespace-line-column 1000) 
+
+;; Enable soft-wrap
+;; (global-visual-line-mode 1)
+
+;; Maintain a list of recent files opened
+(recentf-mode 1)            
+(setq recentf-max-saved-items 50)
+
+
+;; Move all the backup files to specific cache directory
+;; This way you won't have annoying temporary files starting with ~(tilde) in each directory
+;; Following setting will move temporary files to specific folders inside cache directory in EMACS_DIR
+
+(setq user-cache-directory (concat EMACS_DIR "cache"))
+(setq backup-directory-alist `(("." . ,(expand-file-name "backups" user-cache-directory)))
+      url-history-file (expand-file-name "url/history" user-cache-directory)
+      auto-save-list-file-prefix (expand-file-name "auto-save-list/.saves-" user-cache-directory)
+      projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" user-cache-directory))
+
+
+; Coding specific setting
+;; Automatically add ending brackets and braces
+;(electric-pair-mode 1)
+
+;; Make sure tab-width is 4 and not 8
+(setq-default tab-width 4)
+
+
+;Look
+;; (use-package doom-themes
+;; :ensure t 
+;; :init 
+;; (load-theme 'doom-palenight t))
+
+;; (use-package heaven-and-hell
+;;   :ensure t
+;;   :init
+;;   (setq heaven-and-hell-theme-type 'dark)
+;;   (setq heaven-and-hell-themes
+;;         '((light . doom-acario-light)
+;;           (dark . doom-palenight)))
+;;   :hook (after-init . heaven-and-hell-init-hook)
+;;   :bind (("C-c <f6>" . heaven-and-hell-load-default-theme)
+;;          ("<f6>" . heaven-and-hell-toggle-theme)))
+
+
+;; (use-package projectile 
+;; :ensure t
+;; :init (projectile-mode +1)
+;; :config 
+;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; )
+
+(use-package helm
+:ensure t
+:init 
+(helm-mode 1)
+(progn (setq helm-buffers-fuzzy-matching t))
+:bind
+(("C-c h" . helm-command-prefix))
+(("M-x" . helm-M-x))
+(("C-c f" . helm-recentf))   ;; Add new key to recentf
+(("M-y" . helm-show-kill-ring))
+(("C-s" . helm-occur))
+(([f10] . 'helm-semantic-or-imenu))
+(("C-c g" . helm-grep-do-git-grep)))  ;; Search using grep in a git project
+
+;Helm mode
+;(global-set-key (kbd "M-x") 'helm-M-x)
+; Helm
+;(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+;(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+
+;(helm-mode 1)
+;(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+;(global-set-key (kbd "C-s") 'helm-occur)
+;(global-set-key [f11] 'helm-semantic-or-imenu)
+
+
+;Helm descbinds helps to easily search for keyboard shortcuts for modes that are currently active in the project
+(use-package helm-descbinds
+:ensure t
+:bind ("C-h b" . helm-descbinds))
+
+
+;; (use-package lsp-treemacs
+;;   :after (lsp-mode treemacs)
+;;   :ensure t
+;;   :commands lsp-treemacs-errors-list
+;;   :bind (:map lsp-mode-map
+;;          ("M-9" . lsp-treemacs-errors-list)))
+
+;; (use-package treemacs
+;;   :ensure t
+;;   :commands (treemacs)
+;;   :after (lsp-mode))
+
+
+;(use-package helm-lsp
+;:ensure t
+;:after (lsp-mode)
+;:commands (helm-lsp-workspace-symbol)
+;:init (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol))
+
+
 ;Auto complete
 ;(ac-config-default)
 ;(global-auto-complete-mode t)
@@ -64,6 +183,7 @@
 ;; manual autocomplete
 ;(global-set-key (kbd "M-RET") 'company-complete)
 (global-set-key (kbd "<C-return>") 'company-complete)
+(setq-default truncate-lines t)
 
 ;Company box, para toltip de ayuda.
 ;; With use-package:
@@ -76,11 +196,10 @@
 ; Ido mode (Better autocompletion in the mini buffer)
 ;(ido-mode)
 
-;Helm mode
-(global-set-key (kbd "M-x") 'helm-M-x)
+
 ;Inicializ Emacs server para sea mas rapido abrir archivos desde la terminal
 ;emacsclient file.java // By example
-;(server-start) ;Ya no sera necesario con el plugin zsh emacs.
+(server-start) ;Ya no sera necesario con el plugin zsh emacs.
 
 ;Wrap lines o no 
 ;M-x toggle-truncate-lines
@@ -91,6 +210,8 @@
 ;Control-Alt-n Encuentra su otro parentesis
 ;C-M-n forward-sexp
 ;C-M-b backward-sexp
+(global-set-key (kbd "C-c n") 'forward-sexp)
+(global-set-key (kbd "C-c b") 'backward-sexp)
 
 ;-------------------------------------
 ;Aumentar tamaño de letra, before config: 130
@@ -98,16 +219,27 @@
 ;Agregar numeros de lineas
 ;@reference: https://emacs.stackexchange.com/questions/278/how-do-i-display-line-numbers-in-emacs-not-in-the-mode-line
 (add-hook 'prog-mode-hook 'linum-mode)
+
 ;@see: https://www.emacswiki.org/emacs/ShowParenMode
 ;Matches parentesis
 (show-paren-mode 1)
 
 ;Ese theme tambien me gusto
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/badger-theme")
-;(load-theme 'badger t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/badger-theme")
+(load-theme 'badger t)
+(set-face-background 'region "gray37") ;Adecuado para theme badger
+;Buena refencia:
+; https://github.com/howardabrams/dot-files/blob/master/emacs.org
+; https://www.youtube.com/watch?v=dljNabciEGg&t=245s&ab_channel=HowardAbrams
 
 (add-to-list 'custom-theme-load-path "/home/guillermo/.emacs.d/themes/darkburn-theme")
-(load-theme 'darkburn t)
+;(load-theme 'darkburn t)
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/challenger-deep-theme")
+;(load-theme 'challenger-deep t)
+
+;(load-theme 'sanityinc-tomorrow-night t)
+
 
 ;Nyan mode (Gatito)
 (nyan-mode)
@@ -116,11 +248,12 @@
 ;(require 'neotree)
 ;(global-set-key [f12] 'neotree-toggle)
 
+
 (use-package neotree
 :ensure t
 :config
 (setq neo-theme 'icons)
-(global-set-key [f12] 'neotree-toggle))
+(global-set-key [f9] 'neotree-toggle))
 
 
 
@@ -139,8 +272,8 @@
 
 ;Better answer
 (fset 'yes-or-no-p 'y-or-n-p)
-
-(electric-pair-mode) ; enable autopair in all buffers
+; Enable autopair in all buffers
+(electric-pair-mode) 
 
 ;; disable {} auto pairing in electric-pair-mode for web-mode
 ;https://www.topbug.net/blog/2016/09/29/emacs-disable-certain-pairs-for-electric-pair-mode/
@@ -152,10 +285,11 @@
                   (if (char-equal c ?{) t (,electric-pair-inhibit-predicate c))))))
 
 
-
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/challenger-deep-theme")
-;(load-theme 'challenger-deep t)
+;(add-to-list 'custom-theme-load-path "/home/guillermo/.emacs.d/themes/aanila")
+;(load-theme 'aanila' t)
+;(add-to-list 'custom-theme-load-path "/home/guillermo/.emacs.d/themes/avk-emacs-themes")
+;(load-theme 'avk-darkblue-white' t)
+;(load-theme 'avk-darkblue-yellow' t)
 
 ;permanently enable syntax checking with Flycheck
 ;(add-hook 'after-init-hook #'global-flycheck-mode) 
@@ -175,31 +309,40 @@
 ;Instaldo desde MELPA doom-emacs
 ;(load-theme 'doom-city-lights t)
 
+
+
 ;(set-face-foreground 'linum "#E8D92D")
 ;#ffcc00 amarillo
+;Amarillo bonito #F0DFAF
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(linum ((t (:inherit (shadow default) :background "#111111" :foreground "#F0DFAF")))))
+ '(linum ((t (:inherit (shadow default) :background "#171717" :foreground "#F0DFAF"))))) ;badger
+; '(linum ((t (:inherit (shadow default) :background "#1B182C" :foreground "#F0DFAF"))))) ;challenger-deep
+; '(linum ((t (:inherit (shadow default) :background "#191935" :foreground "#F0DFAF"))))) ;darkburn 
+ ;Lineas amarillas #F0DFAF
 
 
 
 ;'(linum ((t (:inherit (shadow default) :background "#1D252C" :foreground "#B5B54A"))))) ;city-light
 ;Cambiar el color de la franja de los numeros
 ;(set-face-attribute 'fringe nil :background "#1D252C")
-(set-face-attribute 'fringe nil :background "#171717")
 ;(set-face-attribute 'fringe nil :background "#111111")
+;Linea negra
+(set-face-attribute 'fringe nil :background "#171717") ; badger
 
 ;(setq-default left-fringe-width 11)
 
-;;Modifica los espacion 4
+;Modifica los espacion 4 for C/C++
 (defun my-c++-mode-hook ()
   (setq c-basic-offset 4)
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c-mode-hook 'my-c++-mode-hook)
+
+
 ;(global-set-key (kbd "<C-x <up>") tab-bar-switch-to-next-tab)
 ;(global-set-key (kbd "<C-x <down>") tab-bar-switch-to-prev-tab)
 
@@ -360,15 +503,15 @@
 
 ; Langtool (check gramatical)
 
-(setq langtool-language-tool-jar "~/bin/LanguageTool-5.1/languagetool-commandline.jar")
-(require 'langtool)
+;(setq langtool-language-tool-jar "~/bin/LanguageTool-5.1/languagetool-commandline.jar")
+;(require 'langtool)
 
 ;; (global-set-key "\C-x4w" 'langtool-check)
 ;; (global-set-key "\C-x4W" 'langtool-check-done)
 ;; (global-set-key "\C-x4l" 'langtool-switch-default-language)
 ;; (global-set-key "\C-x44" 'langtool-show-message-at-point)
 ;; (global-set-key "\C-x4c" 'langtool-correct-buffer)
-(setq langtool-default-language "en-US")
+;(setq langtool-default-language "en-US")
 
 
 (global-set-key (kbd "C-c <left>")  'windmove-left)
@@ -378,24 +521,10 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-
-
-; Helm
-
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-;(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
-;(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-;(helm-mode 1)
-
-(global-set-key (kbd "C-s") 'helm-occur)
-(global-set-key [f11] 'helm-semantic-or-imenu)
-
 (global-set-key (kbd "C-x g") 'goto-line)
 
 ;jump function M.]  dump-jump
-(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
 (use-package rainbow-delimiters
 :ensure t
@@ -403,9 +532,9 @@
 :config
 (add-hook 'prog-mode-hook #'prog-delimiters-mode))
 
-(add-hook 'c-mode-hook 'flycheck-mode)
-(add-hook 'c++-mode-hook 'flycheck-mode)
-(add-hook 'java-mode-hook 'flycheck-mode)
+;(add-hook 'c-mode-hook 'flycheck-mode)
+;(add-hook 'c++-mode-hook 'flycheck-mode)
+;(add-hook 'java-mode-hook 'flycheck-mode)
 ; Con esto lo agrega para la lista de recomendacion de company
 (add-to-list 'company-backends 'company-c-headers)
 
@@ -455,15 +584,6 @@
 
 (global-set-key (kbd "C-c C-a") 'mc/skip-to-previous-like-this)
 
-
-(require 'flymd)
-
- (defun my-flymd-browser-function (url)
-   (let ((browse-url-browser-function 'browse-url-firefox))
-     (browse-url url)))
- (setq flymd-browser-open-function 'my-flymd-browser-function)
-
-
 ;; (use-package doom-modeline
 ;;   :ensure t
 ;;   :init (doom-modeline-mode 1))
@@ -495,31 +615,60 @@
 ;@refernce
 ;https://github.com/neppramod/java_emacs/blob/master/emacs-configuration.org
 ;Solo funciona con la version reciente de java 11, asi tienes que cambiar tu java8 a java 11
+;ensure t - Signigica que use-package ira a buscar el paquete si no tienes descargado.
 (use-package lsp-mode
 :ensure t
-:hook (
-   (lsp-mode . lsp-enable-which-key-integration)
-   (java-mode . #'lsp-deferred)
-)
+;; :hook (
+;;    (lsp-mode . lsp-enable-which-key-integration)
+;;    (java-mode . #'lsp-deferred)
+;; )
 :init (setq 
-    lsp-keymap-prefix "C-c l"              ; this is for which-key integration documentation, need to use lsp-mode-map
-    lsp-enable-file-watchers nil
+    ;; lsp-keymap-prefix "C-c l"              ; this is for which-key integration documentation, need to use lsp-mode-map
+    ;; lsp-enable-file-watchers nil
     read-process-output-max (* 1024 1024)  ; 1 mb
     lsp-completion-provider :capf
     lsp-idle-delay 0.500
 )
 :config 
-    (setq lsp-intelephense-multi-root nil) ; don't scan unnecessary projects
-    (with-eval-after-load 'lsp-intelephense
-    (setf (lsp--client-multi-root (gethash 'iph lsp-clients)) nil))
-	(define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+    ;; (setq lsp-intelephense-multi-root nil) ; don't scan unnecessary projects
+    ;; (with-eval-after-load 'lsp-intelephense
+    ;; (setf (lsp--client-multi-root (gethash 'iph lsp-clients)) nil))
+	;; (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+	(global-set-key (kbd "C-c l") 'helm-lsp-code-actions)
 )
 
 (use-package lsp-java 
 :ensure t
-:config (add-hook 'java-mode-hook 'lsp))
+;; :config (add-hook 'java-mode-hook 'lsp)
+)
 
-;(setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
+;; (use-package lsp-ui
+;; :ensure t
+;; :after (lsp-mode)
+;; :bind (:map lsp-ui-mode-map
+;;          ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+;;          ([remap xref-find-references] . lsp-ui-peek-find-references))
+;; :init (setq lsp-ui-doc-delay 1.5
+;;       lsp-ui-doc-position 'bottom
+;; 	  lsp-ui-doc-max-width 100
+;; ))
+
+(use-package treemacs
+  :ensure t
+  :config
+  (global-set-key [f12] 'treemacs)
+  (global-set-key (kbd "C-c p") 'treemacs-add-project)
+  )
+
+
+;; (use-package neotree
+;; :ensure t
+;; :config
+;; (setq neo-theme 'icons)
+;; (global-set-key [f12] 'neotree-toggle))
+    
+	
+	
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -527,7 +676,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(quickrun company-bootstrap doom-modeline multiple-cursors flymd company-box company-quickhelp mode-icons yasnippet-snippets which-key web-mode use-package rainbow-delimiters projectile nyan-mode neotree magit lsp-java langtool kaolin-themes impatient-mode highlight-numbers highlight-escape-sequences helm google-translate flycheck exec-path-from-shell emmet-mode eglot dumb-jump doom-themes define-word dashboard counsel company-web company-c-headers all-the-icons ac-html-csswatcher ac-html ac-clang ac-capf ac-c-headers)))
+   '(color-theme-sanityinc-tomorrow helm-lsp quickrun company-bootstrap doom-modeline multiple-cursors flymd company-box company-quickhelp mode-icons yasnippet-snippets which-key web-mode use-package rainbow-delimiters projectile nyan-mode neotree magit lsp-java langtool kaolin-themes impatient-mode highlight-numbers highlight-escape-sequences helm google-translate flycheck exec-path-from-shell emmet-mode eglot dumb-jump doom-themes define-word dashboard counsel company-web company-c-headers all-the-icons ac-html-csswatcher ac-html ac-clang ac-capf ac-c-headers)))
 
  
+
 
